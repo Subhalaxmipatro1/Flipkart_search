@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flipkart_search"
+        xmlns:vm="clr-namespace:Flipkart_search.ViewModel"
+       
         mc:Ignorable="d"
         Title="Flipkart Scrapper"  Background="White" Height="800" Width="1300" >
 
-
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    
     <Window.Resources>
 
         <Style x:Key="BulletTextStyle" TargetType="TextBlock">
@@ -17,48 +22,49 @@
             <Setter Property="Margin"  Value="5,8,0,0"/>
         </Style>
 
-        <!--<local:StringEmptyToVisibilityConverter x:Name="BoolToVisibilityConverter" />-->
        
+
 
     </Window.Resources>
 
     <Grid Height="1000" Width="1300" Background="White">
 
         <StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7">
-            <Border  Width="120" Height="30" CornerRadius="5" Background="White"  BorderBrush="Green" BorderThickness="1"  Padding="5" >
-                <TextBlock Text="Account Manager" Foreground="Blue"/>
-            </Border>
-            <Border  Width="120" Height="30" CornerRadius="5" Background="White"  BorderBrush="Green" BorderThickness="1"  Padding="5" Margin="5,0,0,0" >
-                <TextBlock Text="Scrapper" Foreground="Blue" />
-            </Border>
-            <Border  Width="120" Height="30" CornerRadius="5" Background="White"  BorderBrush="Green" BorderThickness="1" Padding="5" Margin="5,0,0,0">
-                <TextBlock Text="Rating And Review" Foreground="Blue" />
-            </Border>
-           
-        </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7">
+                <Border  Width="120" Height="30" CornerRadius="5" Background="White"  BorderBrush="Green" BorderThickness="1"  Padding="5" >
+                    <TextBlock Text="Account Manager" Foreground="Blue"/>
+                </Border>
+                <Border  Width="120" Height="30" CornerRadius="5" Background="White"  BorderBrush="Green" BorderThickness="1"  Padding="5" Margin="5,0,0,0" >
+                    <TextBlock Text="Scrapper" Foreground="Blue" />
+                </Border>
+                <Border  Width="120" Height="30" CornerRadius="5" Background="White"  BorderBrush="Green" BorderThickness="1" Padding="5" Margin="5,0,0,0">
+                    <TextBlock Text="Rating And Review" Foreground="Blue" />
+                </Border>
 
-        <StackPanel Orientation="Horizontal"  Margin="5, 15 ,0,0">
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"  Margin="5, 15 ,0,0">
                 <StackPanel Orientation="Horizontal" Margin="5,15,0,0" VerticalAlignment="Top">
                     <RadioButton Content="Browser View" FontWeight="SemiBold" Margin="5,0,0,0"/>
                     <RadioButton Content="WPF View" FontWeight="SemiBold" Margin="15,0,0,0"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical">
-                <Border BorderBrush="Black" BorderThickness="1"  Height="50" Width="900" Background="Gray"  Margin="5,0,0,0">
+                    <Border BorderBrush="Black" BorderThickness="1"  Height="50" Width="900" Background="Gray"  Margin="5,0,0,0">
 
                         <Grid>
-   <TextBox x:Name="SearchBox" 
+                            <TextBox x:Name="SearchBox" 
          Height="50" Width="900" 
+                                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
          Background="LightGray" Foreground="Blue" 
          FontSize="16"
             HorizontalAlignment="Center" VerticalAlignment="Center"
             VerticalContentAlignment="Center"
-            TextChanged="SearchBox_TextChanged"  />
-        
-                                    
+         TextChanged="SearchBox_TextChanged" />
 
- <TextBlock Text="Search product..."
+
+
+                            <TextBlock Text="Search product..."
    FontSize="16"
    Foreground="Gray"
    Padding="10,0,0,0"
@@ -67,17 +73,17 @@
    x:Name="PlaceholderText"
             Visibility="Visible"/>
 
-                       
-</Grid>
+
+                        </Grid>
 
                     </Border>
-            </StackPanel>
-            <StackPanel>
+                </StackPanel>
+                <StackPanel>
                     <Border Height="50" Width="100" 
         Background="Green" 
         CornerRadius="10" Margin="5,0,0,0">
                         <Button Content="Search"
-            Click="Search_Click"
+           Command="{Binding SearchCommand}" 
             Height="50"
             Width="100"
             Background="Transparent"
@@ -85,18 +91,18 @@
             FontSize="15"
             Foreground="White"/>
                     </Border>
-                   
+
 
                 </StackPanel>
-        </StackPanel>
-           
-            <TextBlock x:Name="StatusText" Text="Total Items: 0" 
+            </StackPanel>
+
+            <TextBlock x:Name="StatusText" Text="{Binding StatusText}"  
            FontSize="16" Foreground="Green" 
-           Margin="1070,5,0,10"/>
+           Margin="500,5,0,10"/>
 
-              
 
-            <ListView x:Name="ProductList"  Margin="10,10,10,10" VerticalAlignment="Stretch" Height="700"
+
+            <ListView x:Name="ProductList" ItemsSource="{Binding DisplayedProducts}"  Margin="10,10,10,10" VerticalAlignment="Stretch" Height="700"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -109,15 +115,15 @@
                                 </Grid.ColumnDefinitions>
 
 
-        <StackPanel Grid.Column="0" Margin="5">
+                                <StackPanel Grid.Column="0" Margin="5">
 
-                                   
-            <Grid Width="260" Height="240" Margin="0,5,0,5">
+
+                                    <Grid Width="260" Height="240" Margin="0,5,0,5">
                                         <Image Source="{Binding CurrentImageUrl}" Stretch="Uniform" />
 
-            <Border Height="35" Width="35" CornerRadius="50"  Margin="-300,2,0,0"
+                                        <Border Height="35" Width="35" CornerRadius="50"  Margin="-300,2,0,0"
                     BorderBrush="Black" BorderThickness="1.5">
-            <Button Content="&#x276E;"
+                                            <Button Content="&#x276E;"
             Width="35" Height="35"
             FontSize="22"
             Background="Transparent"
@@ -126,12 +132,12 @@
             HorizontalAlignment="center"
             VerticalAlignment="Center"
             Command="{Binding ShowPreviousImageCommand}"/>
-         </Border>
+                                        </Border>
 
 
-            <Border Height="35" Width="35" CornerRadius="50" Margin="0,-4,-300,0"
+                                        <Border Height="35" Width="35" CornerRadius="50" Margin="0,-4,-300,0"
             BorderBrush="Black" BorderThickness="1.5">
-            <Button Content="&#x276F;"
+                                            <Button Content="&#x276F;"
             Width="35" Height="35"
             FontSize="22"
             Background="Transparent"
@@ -210,25 +216,34 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                 <Border  Height="40" Width="90"  BorderBrush="Black" BorderThickness="1.5" CornerRadius="10" Margin="0,0,5,0">
-                    <Button Content="⟨ Previous" Click="Privious_click"  Background="Transparent" FontSize="15"   Margin="5"  Height="40" Width="90" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Button Content="⟨ Previous" 
+        Command="{Binding PrevPageCommand}"
+        Background="Transparent"
+        FontSize="15"
+        Margin="5"
+        Height="40"
+        Width="90"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center" />
                 </Border>
-                <TextBlock x:Name="PageInfo" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="PageInfo" Text="{Binding PageInfo}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <Border  Height="40" Width="90" BorderBrush="Black" BorderThickness="1.5" CornerRadius="10" Margin="5,0,0,0">
-                    <Button Content="Next ⟩" Click="Next_click" Background="Transparent" BorderBrush="Transparent" FontSize="15" Margin="5" Height="40" Width="90" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Content="Next ⟩"
+        Command="{Binding NextPageCommand}"
+        Background="Transparent"
+        BorderBrush="Transparent"
+        FontSize="15"
+        Margin="5"
+        Height="40"
+        Width="90"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center" />
                 </Border>
             </StackPanel>
 
 
         </StackPanel>
     </Grid>
-    
+
 </Window>
 
-
-
-
-
-
-    
-  
-         
