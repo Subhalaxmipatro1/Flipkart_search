@@ -21,9 +21,6 @@
             <Setter Property="Margin"  Value="5,8,0,0"/>
         </Style>
 
-       
-
-
     </Window.Resources>
 
     <Grid Height="1000" Width="1300" Background="White">
