@@ -8,53 +8,14 @@ namespace Flipkart_search.Model
 {
     public class ProductModel : INotifyPropertyChanged
     {
-        private string _currentImageUrl;
-        private int _currentImageIndex;
-
-        public ICommand ShowNextImageCommand { get; }
-        public ICommand ShowPreviousImageCommand { get; }
-
-        public ProductModel()
-        {
-            ShowNextImageCommand = new RelayCommand(_ => ShowNextImage());
-            ShowPreviousImageCommand = new RelayCommand(_ => ShowPreviousImage());
-        }
-
-        public string CurrentImageUrl
-        {
-            get => _currentImageUrl;
-            set
-            {
-                if (_currentImageUrl != value)
-                {
-                    _currentImageUrl = value;
-                    OnPropertyChanged(nameof(CurrentImageUrl));
-                }
-            }
-        }
-
-        public void ShowNextImage()
-        {
-            if (ImageUrls == null || ImageUrls.Count <= 1) return;
-            _currentImageIndex = (_currentImageIndex + 1) % ImageUrls.Count;
-            CurrentImageUrl = ImageUrls[_currentImageIndex];
-        }
-
-        public void ShowPreviousImage()
-        {
-            if (ImageUrls == null || ImageUrls.Count <= 1) return;
-            _currentImageIndex = (_currentImageIndex - 1 + ImageUrls.Count) % ImageUrls.Count;
-            CurrentImageUrl = ImageUrls[_currentImageIndex];
-        }
-       
-
-
-        // --- Product properties ---
+        
         public string Title { get; set; }
         public string Price { get; set; }
         public string Rating { get; set; }
         public string Image { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();
+
+        public string CurrentImageUrl { get; set; }
         public string ProductId { get; set; }
         public string Subtitle { get; set; }
         public string Brand { get; set; }
