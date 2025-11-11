@@ -19,6 +19,7 @@ namespace Flipkart_search.ViewModel
         private string _searchQuery;
         private int _currentPage = 1;
         private const int ItemsPerPage = 10;
+
         private string _currentImageUrl;
         private int _currentImageIndex;
 
@@ -34,6 +35,8 @@ namespace Flipkart_search.ViewModel
         public ICommand ShowNextImageCommand { get; }
 
         public ICommand ShowPreviousImageCommand { get; }
+
+        public RelayCommand OpenLoginCommand { get; }
 
         public string StatusText
         {
@@ -56,6 +59,14 @@ namespace Flipkart_search.ViewModel
             ShowNextImageCommand = new RelayCommand(_ => ShowNextImage());
             ShowPreviousImageCommand = new RelayCommand(_ => ShowPreviousImage());
 
+            OpenLoginCommand = new RelayCommand(_ => OpenLoginWindow()); 
+
+        }
+
+        private void OpenLoginWindow()
+        {
+            var loginWindow = new Flipkart_search.View.Login();
+            loginWindow.ShowDialog();
         }
 
         public string CurrentImageUrl

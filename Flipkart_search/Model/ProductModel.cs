@@ -14,7 +14,6 @@ namespace Flipkart_search.Model
         public string Rating { get; set; }
         public string Image { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();
-
         public string CurrentImageUrl { get; set; }
         public string ProductId { get; set; }
         public string Subtitle { get; set; }

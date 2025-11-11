@@ -23,7 +23,7 @@
 
     </Window.Resources>
 
-    <Grid Height="1000" Width="1300" Background="White">
+    <Grid Height="1000" Width="1400" Background="White">
 
         <StackPanel >
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="7">
@@ -50,8 +50,8 @@
 
                         <Grid>
                             <TextBox x:Name="SearchBox" 
-         Height="50" Width="900" 
-                                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+        Height="50" Width="900"
+        Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
          Background="LightGray" Foreground="Blue" 
          FontSize="16"
             HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -60,7 +60,7 @@
 
 
 
-                            <TextBlock Text="Search product..."
+   <TextBlock Text="Search product..."
    FontSize="16"
    Foreground="Gray"
    Padding="10,0,0,0"
@@ -74,9 +74,9 @@
 
                     </Border>
                 </StackPanel>
-                <StackPanel>
+                <StackPanel Orientation="Horizontal" >
                     <Border Height="50" Width="100" 
-        Background="Green" 
+        Background="Green"
         CornerRadius="10" Margin="5,0,0,0">
                         <Button Content="Search"
            Command="{Binding SearchCommand}" 
@@ -88,7 +88,17 @@
             Foreground="White"/>
                     </Border>
 
-
+                    <Border Height="50" Width="100" 
+        Background="DarkBlue" 
+        CornerRadius="10" Margin="5,0,0,0">
+                        <Button Content="Login"  Height="50"
+                                Command="{Binding OpenLoginCommand}"
+ Width="100"
+ Background="Transparent"
+ BorderBrush="Transparent"
+ FontSize="15"
+ Foreground="White" />
+                    </Border>
                 </StackPanel>
             </StackPanel>
 
@@ -162,7 +172,7 @@
                                     </StackPanel>
 
 
-                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,0,0,0"  Height="240" Width="860">
+                                    <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,0,0,0"  Height="240" Width="960">
                                         <!--<StackPanel Orientation="Vertical" Width="300" Margin="5">
                                         <Image Source="{Binding Image}"  Width="300" Height="300" Margin="5"/>
 
