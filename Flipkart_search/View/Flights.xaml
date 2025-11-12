@@ -1,0 +1,51 @@
+﻿<Window x:Class="Flipkart_search.View.Flights"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Flipkart_search.View" 
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Flights" Height="850" Width="1300">
+
+    <Window.Resources>
+        <ImageBrush x:Key="BackgroundImage" ImageSource="/Assets/Flight_water.jpg" Stretch="UniformToFill"/>
+       
+    </Window.Resources>
+
+
+    <Grid>
+        <StackPanel Height="700" Width="1200" Background="{StaticResource BackgroundImage}"  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Height="170" Width="1100" Background="White" Margin="0,200,0,0">
+                <StackPanel Orientation="Horizontal" Margin="5,15,0,0" VerticalAlignment="Top">
+                    <RadioButton Content="One way" FontWeight="SemiBold" Margin="5,15,0,0"/>
+                    <RadioButton Content="Round Trip" FontWeight="SemiBold" Margin="15,15,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="10,35,0,0">
+                    <TextBox x:Name="FromBox" Height="45" Width="200" Margin="10,0,0,0" 
+                        Text="From" Foreground="Gray"/>
+                   
+                    <TextBox x:Name="ToBox" Height="45" Width="200" Margin="10,0,0,0"
+                        Text="To" Foreground="Gray"/>
+
+                    <DatePicker x:Name="DepartDate" Height="45" Width="150" Margin="10,0,0,0"/>
+                    <DatePicker x:Name="ReturnDate" Height="45" Width="150" Margin="10,0,0,0"/>
+
+                    <ComboBox x:Name="ClassBox" Text="Travellers|class" Height="45" Width="150" Margin="10,0,0,0">
+                        <ComboBoxItem Content="1 Traveller, Economy"/>
+                        <ComboBoxItem Content="2 Travellers, Business"/>
+                    </ComboBox>
+
+                    <Button Content="Search Flights" Height="45" Width="150"
+            Background="Blue" Foreground="White" FontSize="16"
+            Margin="20,0,0,0"/>
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
+
+       
+
+    </Grid>
+</Window>

@@ -19,7 +19,7 @@
 
             <StackPanel Orientation="Vertical" Height="500" Width="470" Margin="0,25,0,0" Background="white">
 
-                <Grid Margin="15,70,20,0" Height="40" Width="380">
+            <Grid Margin="15,70,20,0" Height="40" Width="380">
             <TextBox x:Name="Login_mail"
              TextChanged="Loginmail_TextChanged"
              FontSize="15" 

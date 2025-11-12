@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 
@@ -38,6 +39,10 @@ namespace Flipkart_search.ViewModel
 
         public RelayCommand OpenLoginCommand { get; }
 
+        public RelayCommand OpencartCommand { get; }
+
+        public RelayCommand FlightCommand { get; }
+
         public string StatusText
         {
             get => _statusText;
@@ -61,6 +66,10 @@ namespace Flipkart_search.ViewModel
 
             OpenLoginCommand = new RelayCommand(_ => OpenLoginWindow()); 
 
+            OpencartCommand = new RelayCommand(_ => OpencartWindow());
+
+            FlightCommand = new RelayCommand(_ => OpenFlightwindow());
+
         }
 
         private void OpenLoginWindow()
@@ -69,6 +78,17 @@ namespace Flipkart_search.ViewModel
             loginWindow.ShowDialog();
         }
 
+        private void OpencartWindow()
+        { 
+            var cartWindow = new Flipkart_search.View.Cart();
+            cartWindow.ShowDialog();
+        }
+
+        private void OpenFlightwindow()
+        {
+            var Flightwindow = new Flipkart_search.View.Flights();
+            Flightwindow.ShowDialog();
+        }
         public string CurrentImageUrl
         {
             get => _currentImageUrl;
@@ -143,7 +163,7 @@ namespace Flipkart_search.ViewModel
             return allResults;
         }
 
-
+       
 
 
         private string _pageInfo;

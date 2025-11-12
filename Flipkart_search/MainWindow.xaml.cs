@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Flipkart_search
 {
@@ -23,6 +24,15 @@ namespace Flipkart_search
                 : Visibility.Collapsed;
         }
 
+        private void MoreButton_click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            if (btn?.ContextMenu != null)
+            {
+                btn.ContextMenu.PlacementTarget = btn;
+                btn.ContextMenu.IsOpen = true;
+            }
+        }
 
     }
 }
