@@ -103,7 +103,7 @@ Foreground="Black" />
    VerticalAlignment="Center"
    IsHitTestVisible="False"
    x:Name="PlaceholderText"
-            Visibility="Visible"/>
+   Visibility="Visible"/>
 
 
                         </Grid>
@@ -127,13 +127,96 @@ Foreground="Black" />
                     <Border Height="50" Width="90" 
         Background="DarkBlue" 
         CornerRadius="10" Margin="5,0,0,0">
-                        <Button Content="Login"  Height="50"
-                                Command="{Binding OpenLoginCommand}"
- Width="100"
+                        <Button x:Name="LoginButton" Content="Login"  Height="50"  Width="100"            
+              Click="LoginButton_Click"
  Background="Transparent"
  BorderBrush="Transparent"
  FontSize="15"
- Foreground="White" />
+ Foreground="White"
+ Cursor="Hand"
+MouseEnter="LoginButton_MouseEnter"
+MouseLeave="LoginButton_MouseLeave">
+                            <Button.ContextMenu>
+                                <ContextMenu x:Name="LoginMenu" Placement="Bottom" >
+                                    <ContextMenu.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Vertical"/>
+                                        </ItemsPanelTemplate>
+                                    </ContextMenu.ItemsPanel>
+                                    <MenuItem Header="My Profile">
+                                        <MenuItem.Icon>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets"
+Text="&#xE77B;"
+FontSize="16"
+Foreground="Black"
+VerticalAlignment="Center"
+Margin="0"/>
+                                        </MenuItem.Icon>
+                                        
+                                    </MenuItem>
+
+                                    <MenuItem Header="Flipkart Plus Zone">
+                                        <MenuItem.Icon>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets"
+Text="&#xE734;"
+FontSize="16"
+Foreground="Black"
+VerticalAlignment="Center"
+Margin="0"/>
+                                        </MenuItem.Icon>
+
+                                    </MenuItem>
+
+                                    <MenuItem Header="Orders">
+                                        <MenuItem.Icon>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets"
+Text="&#xE7C3;"
+FontSize="16"
+Foreground="Black"
+VerticalAlignment="Center"
+Margin="0"/>
+                                        </MenuItem.Icon>
+
+                                    </MenuItem>
+
+                                    <MenuItem Header="Wishlist">
+                                        <MenuItem.Icon>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets"
+Text="&#xEB52;"
+FontSize="16"
+Foreground="Black"
+VerticalAlignment="Center"
+Margin="0"/>
+                                        </MenuItem.Icon>
+
+                                    </MenuItem>
+
+                                    <MenuItem Header="Rewards">
+                                        <MenuItem.Icon>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets"
+Text="&#xEAFD;"
+FontSize="16"
+Foreground="Black"
+VerticalAlignment="Center"
+Margin="0"/>
+                                        </MenuItem.Icon>
+
+                                    </MenuItem>
+
+                                    <MenuItem Header="Gift Cards">
+                                        <MenuItem.Icon>
+                                            <TextBlock FontFamily="Segoe MDL2 Assets"
+Text="&#xE7EF;"
+FontSize="16"
+Foreground="Black"
+VerticalAlignment="Center"
+Margin="0"/>
+                                        </MenuItem.Icon>
+
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
                     </Border>
 
                     <Border Height="50" Width="90" 
@@ -362,3 +445,4 @@ CornerRadius="10" Margin="5,0,0,0">
 
 </Window>
 
+<!--Command="{Binding OpenLoginCommand}"-->

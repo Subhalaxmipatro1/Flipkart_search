@@ -37,7 +37,7 @@ namespace Flipkart_search.ViewModel
 
         public ICommand ShowPreviousImageCommand { get; }
 
-        public RelayCommand OpenLoginCommand { get; }
+        //public RelayCommand OpenLoginCommand { get; }
 
         public RelayCommand OpencartCommand { get; }
 
@@ -64,7 +64,7 @@ namespace Flipkart_search.ViewModel
             ShowNextImageCommand = new RelayCommand(_ => ShowNextImage());
             ShowPreviousImageCommand = new RelayCommand(_ => ShowPreviousImage());
 
-            OpenLoginCommand = new RelayCommand(_ => OpenLoginWindow()); 
+            //OpenLoginCommand = new RelayCommand(_ => OpenLoginWindow()); 
 
             OpencartCommand = new RelayCommand(_ => OpencartWindow());
 
@@ -72,11 +72,11 @@ namespace Flipkart_search.ViewModel
 
         }
 
-        private void OpenLoginWindow()
-        {
-            var loginWindow = new Flipkart_search.View.Login();
-            loginWindow.ShowDialog();
-        }
+        //private void OpenLoginWindow()
+        //{
+        //    var loginWindow = new Flipkart_search.View.Login();
+        //    loginWindow.ShowDialog();
+        //}
 
         private void OpencartWindow()
         { 
@@ -87,7 +87,7 @@ namespace Flipkart_search.ViewModel
         private void OpenFlightwindow()
         {
             var Flightwindow = new Flipkart_search.View.Flights();
-            Flightwindow.ShowDialog();
+            Flightwindow.ShowDialog();                   
         }
         public string CurrentImageUrl
         {
