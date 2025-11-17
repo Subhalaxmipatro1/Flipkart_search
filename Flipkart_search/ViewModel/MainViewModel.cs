@@ -214,6 +214,7 @@ namespace Flipkart_search.ViewModel
         private void OnPropertyChanged(string name) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
+      
 
     }
 }

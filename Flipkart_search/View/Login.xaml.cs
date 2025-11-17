@@ -1,95 +1,127 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Net;
-using System.Net.Mail;
-
+using Flipkart_search.ViewModel;
 
 namespace Flipkart_search.View
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
     public partial class Login : Window
     {
+        private readonly LoginService _loginService = new LoginService();
+        private string _simulatedOtp;
+        private string _requestId;
+        private string _otpRecipientId;
+
         public Login()
         {
             InitializeComponent();
+            ResetLoginState();
         }
 
-        private void Loginmail_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void Loginmail_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PlaceholderText.Visibility = string.IsNullOrEmpty(Login_mail.Text)
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+            PlaceholderText.Visibility =
+                string.IsNullOrEmpty(Login_mail.Text) ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private string generatedOtp;
-
-        private void OTP_Click(object sender, RoutedEventArgs e)
+        // -------------------- REQUEST OTP --------------------
+        private async void OTP_Click(object sender, RoutedEventArgs e)
         {
-            string recipientEmail = Login_mail.Text.Trim();
+            _otpRecipientId = Login_mail.Text.Trim();
 
-            if (string.IsNullOrEmpty(recipientEmail))
+            if (string.IsNullOrEmpty(_otpRecipientId))
             {
-                MessageBox.Show("Please enter your email ID before requesting OTP.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Enter valid email or mobile number.");
                 return;
             }
 
-           
-            Random rand = new Random();
-            string otp = rand.Next(100000, 999999).ToString();
+            RequestOtpButton.IsEnabled = false;
+            RequestOtpButton.Content = "Sending OTP...";
 
-           
-            SendOtpEmail(recipientEmail, otp);
-        }
-
-        private void SendOtpEmail(string recipientEmail, string otp)
-        {
             try
             {
-                string senderEmail = "subhalaxmipatro@globussoft.in"; 
-                //string senderPassword = "ckgp pcoh syav efps";
-                string senderPassword = "caxu cqxb setv nncu";
+                // Step 1: Simulated Request ID
+                _requestId = await _loginService.RequestOtp(_otpRecipientId);
 
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(senderEmail);
-                mail.To.Add(recipientEmail);
-                mail.Subject = "Your Flipkart OTP";
-                mail.Body = $"Your OTP is: {otp}\nThis OTP is valid for 5 minutes.";
-                mail.IsBodyHtml = false;
+                // Step 2: Generate dummy OTP
+                Random rand = new Random();
+                _simulatedOtp = rand.Next(100000, 999999).ToString();
 
-                SmtpClient smtp = new SmtpClient("mail.globussoft.in", 465);
-                smtp.EnableSsl = true;
-                smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Send(mail);
+                MessageBox.Show($"Simulated OTP sent!\nYour OTP is: {_simulatedOtp}",
+                    "OTP", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                // UI Update
+                OtpPanel.Visibility = Visibility.Visible;
+                Login_mail.IsReadOnly = true;
+                OtpInput.Text = "";
+                OtpInput.Focus();
 
-                MessageBox.Show($"✅ OTP sent successfully to {recipientEmail}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                RequestOtpButton.Content = "Resend OTP";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"❌ Failed to send OTP:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                RequestOtpButton.IsEnabled = true;
             }
         }
 
-        private void VerifyOtp_Click(object sender, RoutedEventArgs e)
+        // -------------------- VERIFY OTP --------------------
+        private async void VerifyOtp_Click(object sender, RoutedEventArgs e)
         {
-            if (OtpInput.Text.Trim() == generatedOtp)
-                MessageBox.Show("OTP Verified Successfully!");
-            else
-                MessageBox.Show("Invalid OTP, please try again.");
+            string userOtp = OtpInput.Text.Trim();
+
+            if (userOtp != _simulatedOtp)
+            {
+                MessageBox.Show("Invalid OTP!");
+                return;
+            }
+
+            VerifyOtpButton.IsEnabled = false;
+            VerifyOtpButton.Content = "Verifying...";
+
+            try
+            {
+                // Step 3: Generate Dummy Token
+                string token = await _loginService.LoginAndGetToken(_otpRecipientId, _requestId, userOtp);
+
+                // Step 4: Extract Dummy User ID
+                string userId = await _loginService.FetchUserIdFromProfile(token);
+
+                MessageBox.Show(
+                    $"LOGIN SUCCESS!\n\nToken: {token.Substring(0, 25)}...\nUser ID: {userId}",
+                    "Success", MessageBoxButton.OK, MessageBoxImage.Information
+                );
+
+                ResetLoginState();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Verification failed:\n" + ex.Message);
+            }
+            finally
+            {
+                VerifyOtpButton.IsEnabled = true;
+                VerifyOtpButton.Content = "Verify OTP";
+            }
+        }
+
+        // -------------------- RESET UI --------------------
+        private void ResetLoginState()
+        {
+            Login_mail.IsReadOnly = false;
+            Login_mail.Text = "";
+
+            _simulatedOtp = null;
+            _requestId = null;
+            _otpRecipientId = null;
+
+            RequestOtpButton.Content = "Request OTP";
+            VerifyOtpButton.Content = "Verify OTP";
+
+            OtpPanel.Visibility = Visibility.Collapsed;
         }
     }
 }
